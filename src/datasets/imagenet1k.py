@@ -33,17 +33,23 @@ def make_imagenet1k(
     training=True,
     copy_data=False,
     drop_last=True,
-    subset_file=None
+    subset_file=None,
+    datasetName = True
 ):
-    dataset = ImageNet(
-        root=root_path,
-        image_folder=image_folder,
-        transform=transform,
-        train=training,
-        copy_data=copy_data,
-        index_targets=False)
-    if subset_file is not None:
-        dataset = ImageNetSubset(dataset, subset_file)
+    if(datasetIsFolder):
+        dataset = torchvision.datasets.ImageFolder(
+            root=root_path,
+            trasform=transform)
+    else:
+        dataset = ImageNet(
+            root=root_path,
+            image_folder=image_folder,
+            transform=transform,
+            train=training,
+            copy_data=copy_data,
+            index_targets=False)
+        if subset_file is not None:
+            dataset = ImageNetSubset(dataset, subset_file)
     logger.info('ImageNet dataset created')
     dist_sampler = torch.utils.data.distributed.DistributedSampler(
         dataset=dataset,

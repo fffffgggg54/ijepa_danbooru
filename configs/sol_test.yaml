@@ -9,6 +9,7 @@ data:
   num_workers: 10
   pin_mem: true
   root_path: /data/datasets/community/deeplearning/imagenet
+  dataset_is_folder: false
   use_color_distortion: false
   use_gaussian_blur: false
   use_horizontal_flip: false

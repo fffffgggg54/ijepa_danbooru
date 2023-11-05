@@ -97,6 +97,7 @@ def main(args, resume_preempt=False):
     image_folder = args['data']['image_folder']
     crop_size = args['data']['crop_size']
     crop_scale = args['data']['crop_scale']
+    dataset_is_folder = args['data']['dataset_is_folder']
     # --
 
     # -- MASK
@@ -201,7 +202,8 @@ def main(args, resume_preempt=False):
             root_path=root_path,
             image_folder=image_folder,
             copy_data=copy_data,
-            drop_last=True)
+            drop_last=True,
+            datasetIsFolder = dataset_is_folder)
     ipe = len(unsupervised_loader)
 
     # -- init optimizer and scheduler

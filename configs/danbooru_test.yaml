@@ -6,7 +6,7 @@ data:
   - 1.0
   crop_size: 224
   image_folder: ./
-  num_workers: 12
+  num_workers: 10
   pin_mem: true
   root_path: ~/danbooru2021/cache/images/224/
   dataset_is_folder: true
@@ -34,9 +34,9 @@ mask:
 meta:
   copy_data: false
   load_checkpoint: false
-  model_name: vit_base
-  pred_depth: 6
-  pred_emb_dim: 320
+  model_name: vit_huge
+  pred_depth: 12
+  pred_emb_dim: 384
   read_checkpoint: null
   use_bfloat16: true
 optimization:

@@ -34,7 +34,7 @@ def make_imagenet1k(
     copy_data=False,
     drop_last=True,
     subset_file=None,
-    datasetName = True
+    datasetIsFolder = True
 ):
     if(datasetIsFolder):
         dataset = torchvision.datasets.ImageFolder(

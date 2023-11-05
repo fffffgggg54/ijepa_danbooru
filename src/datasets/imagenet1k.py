@@ -39,7 +39,7 @@ def make_imagenet1k(
     if(datasetIsFolder):
         dataset = torchvision.datasets.ImageFolder(
             root=root_path,
-            trasform=transform)
+            transform=transform)
     else:
         dataset = ImageNet(
             root=root_path,

@@ -10,6 +10,7 @@ data:
   pin_mem: true
   root_path: ~/danbooru2021/cache/images/224/
   dataset_is_folder: true
+  load_ds_archive: ds_archive.pkl
   use_color_distortion: false
   use_gaussian_blur: false
   use_horizontal_flip: false

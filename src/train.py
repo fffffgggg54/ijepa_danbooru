@@ -98,6 +98,7 @@ def main(args, resume_preempt=False):
     crop_size = args['data']['crop_size']
     crop_scale = args['data']['crop_scale']
     dataset_is_folder = args['data']['dataset_is_folder']
+    load_ds_archive = args['data']['load_ds_archive']
     # --
 
     # -- MASK
@@ -149,6 +150,9 @@ def main(args, resume_preempt=False):
     load_path = None
     if load_model:
         load_path = os.path.join(folder, r_file) if r_file is not None else latest_path
+
+    if load_ds_archive is not None:
+        load_ds_archive = os.path.join(folder, load_ds_archive)
 
     # -- make csv_logger
     csv_logger = CSVLogger(log_file,
@@ -203,7 +207,8 @@ def main(args, resume_preempt=False):
             image_folder=image_folder,
             copy_data=copy_data,
             drop_last=True,
-            datasetIsFolder = dataset_is_folder)
+            datasetIsFolder = dataset_is_folder,
+            load_ds_archive = load_ds_archive)
     ipe = len(unsupervised_loader)
 
     # -- init optimizer and scheduler

@@ -15,6 +15,7 @@ from logging import getLogger
 
 import torch
 import torchvision
+import _pickle as cPickle
 
 _GLOBAL_SEED = 0
 logger = getLogger()
@@ -34,23 +35,40 @@ def make_imagenet1k(
     copy_data=False,
     drop_last=True,
     subset_file=None,
-    datasetIsFolder = True
+    datasetIsFolder = True,
+    load_archive = None
 ):
-    if(datasetIsFolder):
-        dataset = torchvision.datasets.ImageFolder(
-            root=root_path,
-            transform=transform)
-    else:
-        dataset = ImageNet(
-            root=root_path,
-            image_folder=image_folder,
-            transform=transform,
-            train=training,
-            copy_data=copy_data,
-            index_targets=False)
-        if subset_file is not None:
-            dataset = ImageNetSubset(dataset, subset_file)
-    logger.info('ImageNet dataset created')
+    try:
+        assert load_archive is not None
+        assert os.path.exists(load_archive)
+        with open(load_archive, 'rb') as ds_archive):
+            dataset = cPickle.load(ds_archive)
+        logger.info('Loaded dataset pickle')
+    except Exception as e:
+        print(e)
+        
+        if(datasetIsFolder):
+            dataset = torchvision.datasets.ImageFolder(
+                root=root_path,
+                transform=transform)
+            logger.info('ImageFolder dataset created')
+        else:
+            dataset = ImageNet(
+                root=root_path,
+                image_folder=image_folder,
+                transform=transform,
+                train=training,
+                copy_data=copy_data,
+                index_targets=False)
+            if subset_file is not None:
+                dataset = ImageNetSubset(dataset, subset_file)
+            logger.info('ImageNet dataset created')
+            
+        if(load_archive is not None):
+            with open(load_archive, 'wb') as ds_archive):
+                cPickle.dump(dataset, ds_archive)
+            logger.info('Pickled dataset')
+            
     dist_sampler = torch.utils.data.distributed.DistributedSampler(
         dataset=dataset,
         num_replicas=world_size,

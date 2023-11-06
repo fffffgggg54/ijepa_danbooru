@@ -36,12 +36,12 @@ def make_imagenet1k(
     drop_last=True,
     subset_file=None,
     datasetIsFolder = True,
-    load_archive = None
+    load_ds_archive = None
 ):
     try:
-        assert load_archive is not None
+        assert load_ds_archive is not None
         assert os.path.exists(load_archive)
-        with open(load_archive, 'rb') as ds_archive):
+        with open(load_ds_archive, 'rb') as ds_archive):
             dataset = cPickle.load(ds_archive)
         logger.info('Loaded dataset pickle')
     except Exception as e:
@@ -64,8 +64,8 @@ def make_imagenet1k(
                 dataset = ImageNetSubset(dataset, subset_file)
             logger.info('ImageNet dataset created')
             
-        if(load_archive is not None):
-            with open(load_archive, 'wb') as ds_archive):
+        if(load_ds_archive is not None):
+            with open(load_ds_archive, 'wb') as ds_archive):
                 cPickle.dump(dataset, ds_archive)
             logger.info('Pickled dataset')
             

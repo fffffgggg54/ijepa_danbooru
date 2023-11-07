@@ -65,7 +65,7 @@ def make_imagenet1k(
             logger.info('ImageNet dataset created')
             
         if(load_ds_archive is not None):
-            with open(load_ds_archive, 'wb') as ds_archive):
+            with open(load_ds_archive, 'wb') as ds_archive:
                 cPickle.dump(dataset, ds_archive)
             logger.info('Pickled dataset')
             

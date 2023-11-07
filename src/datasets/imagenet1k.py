@@ -40,7 +40,7 @@ def make_imagenet1k(
 ):
     try:
         assert load_ds_archive is not None
-        assert os.path.exists(load_archive)
+        assert os.path.exists(load_ds_archive)
         with open(load_ds_archive, 'rb') as ds_archive:
             dataset = cPickle.load(ds_archive)
         logger.info('Loaded dataset pickle')
